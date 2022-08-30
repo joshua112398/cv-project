@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Profile from './Profile';
+import Education from './Education';
+import Experiences from './Experiences';
 
 class Resume extends Component {
   constructor() {
@@ -10,6 +12,8 @@ class Resume extends Component {
     return (
       <div id="resume">
         <Profile />
+        <Education />
+        <Experiences />
       </div>
     )
   }
