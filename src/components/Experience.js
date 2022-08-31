@@ -5,11 +5,16 @@ class Experience extends Component {
     super();
 
     this.state = {
-      title: 'Electrical Engineer',
-      startDate: 'Oct 2017',
-      endDate: 'Nov 2021',
-      description: 'Designed PCBs for an aquatic drone',
+      title: 'Job Title',
+      startDate: 'Start Date',
+      endDate: 'End Date',
+      description: 'Description',
+      displayForm: false,
     }
+
+    this.handleChange = this.handleChange.bind(this);
+    this.hideForm = this.hideForm.bind(this);
+    this.showForm = this.showForm.bind(this);
   }
 
   handleChange(e, input) {
@@ -20,26 +25,42 @@ class Experience extends Component {
     });
   }
 
+  showForm() {
+    this.setState({
+      displayForm: true,
+    });
+  }
+
+  hideForm(e) {
+    e.preventDefault();
+    this.setState({
+      displayForm: false,
+    });
+  }
+
   render() {
+    const experienceForm = (
+      <form className="experienceForm">
+        <input 
+          onChange={(e) => {this.handleChange(e, "title")}}  
+          value={this.state.title}></input>
+        <input 
+          onChange={(e) => {this.handleChange(e, "startDate")}}  
+          value={this.state.startDate}/>
+        <input 
+          onChange={(e) => {this.handleChange(e, "endDate")}}  
+          value={this.state.endDate}/>
+        <textarea 
+          onChange={(e) => {this.handleChange(e, "description")}}  
+          value={this.state.description}></textarea>
+        <button type="submit" onClick={this.hideForm}>Confirm</button>
+      </form>
+    );
+
     return (
       <div className="experience">
-        <form className="experienceForm">
-          <input 
-            onChange={(e) => {this.handleChange(e, "title")}}  
-            placeholder="Job or Project Title"></input>
-          <input 
-            onChange={(e) => {this.handleChange(e, "startDate")}}  
-            placeholder="Start Date"/>
-          <input 
-            onChange={(e) => {this.handleChange(e, "endDate")}}  
-            placeholder="End Date"/>
-          <textarea 
-            type
-            onChange={(e) => {this.handleChange(e, "description")}}  
-            placeholder="Description"></textarea>
-          <button type="submit">Confirm</button>
-        </form>
-        <div className="schoolContent">
+        {this.state.displayForm ? experienceForm : null}
+        <div className="schoolContent" onClick={this.showForm}>
           <h3>{this.state.title}</h3>
           <p>{this.state.startDate} to {this.state.endDate}</p>
           <p>{this.state.description}</p>

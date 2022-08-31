@@ -5,12 +5,17 @@ class School extends Component {
     super()
 
     this.state = {
-      name: 'Example School',
-      location: 'San Francisco',
-      gradYear: '2017',
-      major: 'Biology',
-      GPA: '3.8',
+      name: 'School Name',
+      location: 'Location',
+      gradYear: 'Grad Year',
+      major: 'Major',
+      GPA: 'GPA',
+      displayForm: false,
     }
+
+    this.handleChange = this.handleChange.bind(this);
+    this.hideForm = this.hideForm.bind(this);
+    this.showForm = this.showForm.bind(this);
   }
 
   handleChange(e, input) {
@@ -21,33 +26,44 @@ class School extends Component {
     });
   }
 
+  showForm() {
+    this.setState({
+      displayForm: true,
+    });
+  }
+
+  hideForm(e) {
+    e.preventDefault();
+    this.setState({
+      displayForm: false,
+    });
+  }
+
   render() {
+    const schoolForm = (
+      <form className="schoolForm">
+        <input 
+          onChange={(e) => {this.handleChange(e, "name")}} 
+          value={this.state.name}></input>
+        <input 
+          onChange={(e) => {this.handleChange(e, "location")}} 
+          value={this.state.location}/>
+        <input 
+          onChange={(e) => {this.handleChange(e, "gradYear")}} 
+          value={this.state.gradYear}/>
+        <input 
+          onChange={(e) => {this.handleChange(e, "major")}}  
+          value={this.state.major}/>
+        <input 
+          onChange={(e) => {this.handleChange(e, "GPA")}} 
+          value={this.state.GPA}/>
+        <button type="submit" onClick={this.hideForm}>Confirm</button>
+      </form>
+    );
     return (
       <div className="school">
-        <form className="schoolForm">
-          <input 
-            onChange={(e) => {this.handleChange(e, "name")}} 
-            className="nameInput" 
-            placeholder="School Name"></input>
-          <input 
-            onChange={(e) => {this.handleChange(e, "location")}} 
-            className="locationInput" 
-            placeholder="Location"/>
-          <input 
-            onChange={(e) => {this.handleChange(e, "gradYear")}} 
-            className="gradYearInput" 
-            placeholder="Graduation Year"/>
-          <input 
-            onChange={(e) => {this.handleChange(e, "major")}} 
-            className="majorInput" 
-            placeholder="Major"/>
-          <input 
-            onChange={(e) => {this.handleChange(e, "GPA")}} 
-            className="gpaInput" 
-            placeholder="GPA"/>
-          <button type="submit">Confirm</button>
-        </form>
-        <div className="schoolContent">
+        {this.state.displayForm ? schoolForm : null}
+        <div className="schoolContent" onClick={this.showForm}>
           <h3 className="name">{this.state.name}</h3>
           <p className="location">{this.state.location}</p>
           <p className="gradYear">{this.state.gradYear}</p>
